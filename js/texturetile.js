@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.WEBGL, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+let game = new Phaser.Game(800, 600, Phaser.WEBGL, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
 
@@ -9,14 +9,14 @@ function preload() {
 
 }
 
-var map;
-var texture;
-var stamp;
-var tx = 0;
-var ty = 0;
-var cursors;
-var sprite;
-var emitter;
+let map;
+let texture;
+let stamp;
+let tx = 0;
+let ty = 0;
+let cursors;
+let sprite;
+let emitter;
 
 function create() {
 
@@ -29,7 +29,7 @@ function create() {
 
     texture = game.add.renderTexture(game.width, game.height);
 
-    var rtMap = game.add.sprite(0, 0, texture);
+    let rtMap = game.add.sprite(0, 0, texture);
     rtMap.fixedToCamera = true;
 
     cursors = game.input.keyboard.createCursorKeys();
@@ -57,23 +57,23 @@ function create() {
 
 function renderMap() {
 
-    var cx = game.math.snapToFloor(game.camera.x, 16) / 16;
-    var cy = game.math.snapToFloor(game.camera.y, 16) / 16;
+    let cx = game.math.snapToFloor(game.camera.x, 16) / 16;
+    let cy = game.math.snapToFloor(game.camera.y, 16) / 16;
 
     // console.log(game.camera.x, '=', cx, game.camera.y, '=', cy);
 
-    var tile = null;
+    let tile = null;
     //  800/16 = 50
     //  600/16 = 37.5
-    var w = cx + 50;
-    var h = cy + 38;
-    var dx = 0;
-    var dy = 0;
-    var cls = true;
+    let w = cx + 50;
+    let h = cy + 38;
+    let dx = 0;
+    let dy = 0;
+    let cls = true;
 
-    for (var y = cy; y < h; y++)
+    for (let y = cy; y < h; y++)
     {
-        for (var x = cx; x < w; x++)
+        for (let x = cx; x < w; x++)
         {
             tile = map.getTile(x, y);
 
