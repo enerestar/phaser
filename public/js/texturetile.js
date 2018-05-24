@@ -23,6 +23,7 @@ function create() {
     map = game.add.tilemap('level3');
     map.setCollisionByExclusion([7, 32, 35, 36, 47]);
 
+    // setBounds(0, 0) --> demarcates the start of the map loaded
     game.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
     stamp = game.add.sprite(0, 0, 'tiles', 3);
@@ -49,7 +50,7 @@ function create() {
 
     sprite.body.tilePadding.set(32, 32);
 
-    game.camera.follow(sprite);
+    game.camera.follow(sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
     renderMap();
 

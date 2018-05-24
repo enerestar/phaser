@@ -13,6 +13,8 @@ let game = new Phaser.Game(448, 496, Phaser.AUTO);
         this.opposites = [ Phaser.NONE, Phaser.RIGHT, Phaser.LEFT, Phaser.DOWN, Phaser.UP ];
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
+        this.score = 0;
+        this.scoreText;
     };
     Pacman.prototype = {
         init: function () {
@@ -53,6 +55,7 @@ let game = new Phaser.Game(448, 496, Phaser.AUTO);
             this.cursors = this.input.keyboard.createCursorKeys();
             this.pacman.play('munch');
             this.move(Phaser.LEFT);
+            this.scoreText = this.add.text(16,16, 'score: 0', {fontSize: '32px', fill:'#FFF'});
         },
         checkKeys: function () {
             if (this.cursors.left.isDown && this.current !== Phaser.LEFT)
@@ -144,9 +147,21 @@ let game = new Phaser.Game(448, 496, Phaser.AUTO);
             this.current = direction;
         },
         eatDot: function (pacman, dot) {
+            
             dot.kill();
+            if (dot.kill())
+            {
+                console.log("here we have pacman eating the dots now ")
+                this.score += 1;
+                console.log("score is...? " + this.score)
+                console.log("does the text exist and who is it? " + this.scoreText);
+                console.log("get the text exist and who is it? " + this.scoreText.getText);
+                this.scoreText.setText('Score: ' + this.score);
+            }
+          
             if (this.dots.total === 0)
             {
+                // go to next level here once the dots are completed
                 this.dots.callAll('revive');
             }
         },
