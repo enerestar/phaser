@@ -14,6 +14,7 @@ let marker;
 
 let sprite;
 let cursors;
+// let safetile = 1;
 let currentDataString;
 
 function create() {
@@ -24,11 +25,21 @@ function create() {
 
     map.addTilesetImage('test'); // tied to json tileset's name
 
-    // map.setCollisionBetween(1, 12);
-
     layer = map.createLayer('Tile Layer 1'); // tied to json layer's name
 
     layer.resizeWorld();
+
+    // setCollisionBetween: function (start, stop, collides, recalculateFaces, layer)
+    // map.setCollisionByExclusion([safetile], true, this.layer)
+    
+    // this setting allows the sprite to go through all the tiles that has the special properties
+    // map.setCollisionBetween(20, 25);
+    
+    // this gives the inverse of the maps path
+    map.setCollisionBetween(20, 20);
+    map.setCollisionBetween(73, 73);
+    // map.setCollisionBetween(99, 112)
+
 
     //  Our painting marker
     marker = game.add.graphics();
@@ -38,16 +49,14 @@ function create() {
     game.input.addMoveCallback(updateMarker, this);
 
     game.input.onDown.add(getTileProperties, this);
-
-    cursors = game.input.keyboard.createCursorKeys();
-
     sprite = game.add.sprite(300,90, 'phaser');
-    sprite.anchor.set(0.5);
+    sprite.anchor.set(6,3.5);
     // this 2 codes set the image moving in the x-axis
     game.physics.enable(sprite, Phaser.Physics.ARCADE);
     sprite.body.velocity.x=150
     // sprite.body.tilePadding.set(32,32);
     // game.camera.follow(sprite)
+    cursors = game.input.keyboard.createCursorKeys();
 }
 
 function getTileProperties() {
@@ -59,7 +68,7 @@ function getTileProperties() {
     
     // Note: JSON.stringify will convert the object tile properties to a string
     currentDataString = JSON.stringify( tile.properties );
-
+    // currentDataString = "Tile at position " + ( (y * map.width) + (x+1) ) + " has an ID of " + tile.index + " -- x = " + x + " y = " + y + " -- "  + JSON.stringify( tile.properties ); 
     tile.properties.wibble = true;
 
 }
@@ -73,29 +82,44 @@ function updateMarker() {
 
 function update() {
 
+    // console.log('sprite is? ' + sprite);
+    
     // if (cursors.left.isDown)
     // {
+    //     console.log('cursor left');
+    //     sprite.body.velocity = -200;
+    //     // game.physics.arcade.collide(sprite, layer);
     //     game.camera.x -= 4;
     // }
     // else if (cursors.right.isDown)
     // {
+    //     console.log('cursor right');
+    //     sprite.body.velocity = 200;
+    //     // game.physics.arcade.collide(sprite, layer);
     //     game.camera.x += 4;
     // }
 
     // if (cursors.up.isDown)
     // {
-    //     // sprite.body.velocity = -200;
+    //     console.log('cursor up');
+    //     sprite.body.velocity = -200;
+    //     // game.physics.arcade.collide(sprite, layer);
     //     game.camera.y -= 4;
     // }
     // else if (cursors.down.isDown)
     // {
-    //     // sprite.body.velocity = 200;
+    //     console.log('cursor down');
+    //     sprite.body.velocity = 200;
+    //     // game.physics.arcade.collide(sprite, layer);
     //     game.camera.y += 4;
     // }
 
     // this code below allows the sprite to move according to cursor movement
     if(game.physics.arcade.distanceToPointer(sprite, game.input.activePointer) > 8) {
         game.physics.arcade.moveToPointer(sprite,300);
+        console.log("sprite" + sprite);
+        console.log("layer" + layer);
+        game.physics.arcade.collide(sprite, layer);
     }
     else{
         sprite.body.velocity.set(0);

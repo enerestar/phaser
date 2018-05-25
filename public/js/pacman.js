@@ -14,7 +14,8 @@ let game = new Phaser.Game(448, 496, Phaser.AUTO);
         this.current = Phaser.NONE;
         this.turning = Phaser.NONE;
         this.score = 0;
-        this.scoreText;
+        this.cheesePower = 0;
+        this.underCheeseEffect = 0;
     };
     Pacman.prototype = {
         init: function () {
@@ -30,6 +31,7 @@ let game = new Phaser.Game(448, 496, Phaser.AUTO);
             // this.load.baseURL = 'http://files.phaser.io.s3.amazonaws.com/codingtips/issue005/';
             // this.load.crossOrigin = 'anonymous';
             this.load.image('dot', 'assets/pacman/dot.png');
+            // this.load.image('cheese', 'assets/pacman/cheese.png')
             this.load.image('tiles', 'assets/tilemaps/tiles/pacman-tiles.png');
             this.load.spritesheet('pacman', 'assets/pacman/pacman.png', 32, 32);
             this.load.tilemap('map', 'assets/tilemaps/maps/pacman-map.json', null, Phaser.Tilemap.TILED_JSON);
@@ -40,6 +42,7 @@ let game = new Phaser.Game(448, 496, Phaser.AUTO);
             this.map.addTilesetImage('pacman-tiles', 'tiles');
             this.layer = this.map.createLayer('Pacman');
             this.dots = this.add.physicsGroup();
+            // this.cheese = this.add.physicsGroup();
             this.map.createFromTiles(7, this.safetile, 'dot', this.layer, this.dots);
             //  The dots will need to be offset by 6px to put them back in the middle of the grid
             this.dots.setAll('x', 6, false, false, 1);
